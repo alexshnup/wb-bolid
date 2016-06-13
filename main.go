@@ -20,10 +20,10 @@ return Command1
 
 //Send and Receive Answer bytes
 func write_serial(send []byte) []byte{
-  delay := 500 * time.Millisecond
+  delay := 50 * time.Millisecond
 
   //c := &serial.Config{Name: "/dev/ttyS2", Baud: 9600, ReadTimeout: time.Millisecond * 500}
-  c := &serial.Config{Name: "/dev/ttyAPP1", Baud: 9600, ReadTimeout: time.Millisecond * 500}
+  c := &serial.Config{Name: "/dev/ttyAPP4", Baud: 9600, ReadTimeout: time.Millisecond * 5000}
 
    //c := new(serial.Config)
    //c.Name = "/dev/ttyAPP1"
@@ -48,7 +48,7 @@ func write_serial(send []byte) []byte{
   }
 
   //Need delay for correct the receive answer
-  //time.Sleep(delay)
+  time.Sleep(delay)
 
   //Receive Respond
   buf := make([]byte, 6)
@@ -61,7 +61,7 @@ func write_serial(send []byte) []byte{
 
   //Discards data written to the port but not transmitted,
   //or data received but not read
-  //s.Flush()
+  s.Flush()
 
   //Close Serial Port
   s.Close()
@@ -123,25 +123,25 @@ func main() {
 
       Relay_ON(127, 1)
       StatusRelay(127, 1)
-        time.Sleep(1000 * time.Millisecond)
+        time.Sleep(100 * time.Millisecond)
       Relay_OFF(127, 1)
       StatusRelay(127, 1)
 
       Relay_ON(127, 2)
       StatusRelay(127, 2)
-        time.Sleep(1000 * time.Millisecond)
+        time.Sleep(100 * time.Millisecond)
       Relay_OFF(127, 2)
       StatusRelay(127, 2)
 
       Relay_ON(127, 3)
       StatusRelay(127, 3)
-        time.Sleep(1000 * time.Millisecond)
+        time.Sleep(100 * time.Millisecond)
       Relay_OFF(127, 3)
       StatusRelay(127, 3)
 
       Relay_ON(127, 4)
       StatusRelay(127, 4)
-        time.Sleep(1000 * time.Millisecond)
+        time.Sleep(100 * time.Millisecond)
       Relay_OFF(127, 4)
       StatusRelay(127, 4)
 
