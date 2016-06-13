@@ -1,0 +1,12 @@
+Source: wb-bolid
+Maintainer: Aleksei Melnik <alexshnup@gmail.com>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 9), pkg-config
+
+Package: wb-bolid
+Architecture: armel amd64 i386
+Depends: libc6 (>= 2.13), ${misc:Depends}
+Breaks: wb-mqtt-confed (<< 1.0.2)
+Description: Wiren Board Bolid Controll
