@@ -1,4 +1,0 @@
-#!/bin/sh
-
-update-rc.d wb-bolid defaults
-invoke-rc.d wb-bolid start

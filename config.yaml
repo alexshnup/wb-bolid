@@ -1,0 +1,11 @@
+debug:   true
+timeout: 3000
+name:    "/devices/c2000-sp1"
+mqtt:
+  protocol: "tcp"
+  address:  "localhost"
+  port:     "1883"
+serial:
+  port: "/dev/ttyAPP1"
+  baud: 9600
+  readtimeout: 1000
