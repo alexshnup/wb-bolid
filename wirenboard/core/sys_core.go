@@ -1,7 +1,7 @@
 package syscore
 
 import (
-	mqtt "github.com/alexshnup/paho.mqtt.golang"
+	mqtt "github.com/alexshnup/mqtt"
 )
 
 // System struct

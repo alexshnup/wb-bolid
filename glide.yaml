@@ -1,5 +1,8 @@
 package: github.com/alexshnup/wb-bolid
 import:
 - package: github.com/alexshnup/go-config-manager
-- package: github.com/alexshnup/paho.mqtt.golang
+- package: github.com/alexshnup/mqtt
 - package: github.com/alexshnup/serial
+- package: github.com/alexshnup/yaml.v2
+- package: github.com/alexshnup/uuid
+- package: golang.org/x/net/websocket

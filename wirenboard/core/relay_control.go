@@ -112,6 +112,7 @@ func Relay_ON(addr uint8, relay uint8) string {
 
 func Relay_OFF(addr uint8, relay uint8) string {
 	Command1 := []byte{127, 8, 0, 65, 1, 0, 0, 2, 0}
+	// Command1 := conf.Config.Bolid.RelayOFF
 	CommandEnter := []byte{127, 6, 0, 23, 0, 0, 0}
 	Command1[0] = addr
 	Command1[4] = relay

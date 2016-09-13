@@ -9,3 +9,6 @@ serial:
   port: "/dev/ttyAPP1"
   baud: 9600
   readtimeout: 1000
+# bolid:
+#   relayon: 127, 8, 0, 65, 1, 0, 0, 1, 0
+#   relayoff: 127, 8, 0, 65, 1, 0, 0, 2, 0

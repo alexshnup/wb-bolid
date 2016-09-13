@@ -20,12 +20,16 @@ clean:
 amd64:
 	$(MAKE) DEB_TARGET_ARCH=amd64
 
-wb-bolid: main.go
+wb-bolid: main.go *.go
 	$(GO_ENV) glide install
 	$(GO_ENV) go build
 
 install:
-	mkdir -p $(DESTDIR)/usr/bin/
+	mkdir -p $(DESTDIR)/usr/bin/ $(DESTDIR)/etc/init.d/ $(DESTDIR)/etc/wb-bolid/ $(DESTDIR)/usr/share/wb-mqtt-confed/schemas $(DESTDIR)/etc/wb-configs.d $(DESTDIR)/usr/share/wb-bolid-system/scripts/ $(DESTDIR)/usr/share/wb-bolid/
 	install -m 0755 wb-bolid $(DESTDIR)/usr/bin/
+	install -m 0660 wb-bolid-conf.yaml $(DESTDIR)/etc/
+	install -m 0755 initscripts/wb-bolid $(DESTDIR)/etc/init.d/wb-bolid
+
+
 deb:
 	CC=arm-linux-gnueabi-gcc dpkg-buildpackage -b -aarmel -us -uc

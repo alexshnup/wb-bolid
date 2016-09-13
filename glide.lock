@@ -1,0 +1,22 @@
+hash: 7dc4b8d9828558d785d2f8bd21ad0ebade761ccd1ffc6d78dc7f11e2ce218b3b
+updated: 2016-09-13T07:54:59.158366507Z
+imports:
+- name: github.com/alexshnup/go-config-manager
+  version: 510732f0c5058b2aeaa1357c1d9f107c67f3a591
+  subpackages:
+  - yaml
+- name: github.com/alexshnup/mqtt
+  version: 97581720592f03746b298457bd91409451d8310b
+  subpackages:
+  - packets
+- name: github.com/alexshnup/serial
+  version: 37be519d49878d0098e34fb614136b81e6c87861
+- name: github.com/alexshnup/uuid
+  version: b984ec7fa9ff9e428bd0cf0abf429384dfbe3e37
+- name: github.com/alexshnup/yaml.v2
+  version: 2de08218577fe80341ac6ff5295507d42ea557b8
+- name: golang.org/x/net
+  version: 749a502dd1eaf3e5bfd4f8956748c502357c0bbe
+  subpackages:
+  - websocket
+devImports: []

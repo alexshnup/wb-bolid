@@ -18,17 +18,17 @@
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DESC="Car Meshure Engine for Wiren Board"
+DESC="MQTT Bolid GW"
 NAME=wb-bolid
 DAEMON=/usr/bin/$NAME
-# CONFIG_FILE="/etc/wb-bolid.conf"
+CONFIG_FILE="/etc/wb-bolid.yaml"
 DAEMON_ARGS=""
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
-WB_RULES_OPTIONS=""
-RULE_DIR=/etc/wb-bolid
-SYSTEM_RULE_DIR=/usr/share/wb-bolid-system/rules/
-PRIVATE_RULE_DIR=/usr/share/wb-bolid/
+WB_BOLID_OPTIONS=""
+BOLID_DIR=/etc/wb-bolid
+SYSTEM_BOLID_DIR=/usr/share/wb-bolid-system/rules/
+PRIVATE_BOLID_DIR=/usr/share/wb-bolid/
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0
@@ -44,7 +44,7 @@ PRIVATE_RULE_DIR=/usr/share/wb-bolid/
 # and status_of_proc is working.
 . /lib/lsb/init-functions
 
-DAEMON_ARGS="$WB_RULES_OPTIONS -syslog -editdir '$RULE_DIR' '$SYSTEM_RULE_DIR' '$RULE_DIR' '$PRIVATE_RULE_DIR'"
+DAEMON_ARGS="$WB_BOLID_OPTIONS -syslog -editdir '$BOLID_DIR' '$SYSTEM_BOLID_DIR' '$BOLID_DIR' '$PRIVATE_BOLID_DIR'"
 
 #
 # Function that starts the daemon/service

@@ -1,7 +1,7 @@
 package wirenboard
 
 import (
-	mqtt "github.com/alexshnup/paho.mqtt.golang"
+	mqtt "github.com/alexshnup/mqtt"
 
 	"github.com/alexshnup/wb-bolid/wirenboard/core"
 )

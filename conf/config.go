@@ -15,7 +15,7 @@ type ConfigRoot struct {
 	Name    string `yaml:"name"`
 	Mqtt    Mqtt   `yaml:"mqtt"`
 	Serial  Serial `yaml:"serial"`
-	Bolid   Bolid  `yaml:"serial"`
+	Bolid   Bolid  `yaml:"bolid"`
 }
 
 // Mqtt struct
@@ -50,6 +50,7 @@ var Config ConfigRoot
 
 func init() {
 	// Config manager
-	err := yamlCfg.NewConfig("config.yaml").Load(&Config)
+	err := yamlCfg.NewConfig("wb-bolid-conf.yaml").Load(&Config)
+	err = yamlCfg.NewConfig("/etc/wb-bolid-conf.yaml").Load(&Config)
 	checkError(err)
 }

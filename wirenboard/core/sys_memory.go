@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	mqtt "github.com/eclipse/paho.mqtt.golang"
+	mqtt "github.com/alexshnup/mqtt"
 
 	"github.com/alexshnup/wb-bolid/service"
 	"github.com/alexshnup/wb-bolid/service/meminfo"
