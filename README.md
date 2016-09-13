@@ -1,22 +1,20 @@
 # wb-bolid
 
-Device 127 Relay 1 ON:
+Device 127 Relay-1 ON:
 ```
 root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/1/on" -m "1"
 ```
 
-Device 127 Relay 2 OFF:
+Device 127 Relay-2 OFF:
 ```
 root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/2/on" -m "0"
 ```
 
 
-Request Relay Status
+Request status device 127, Relay-3
 ```
-root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/1/on" -m "status"
-root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/2/on" -m "status"
-root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/3/on" -m "status"
-root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/4/on" -m "status"
+root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/3/state" -m ""
+
 ```
 
 reply:

@@ -116,28 +116,33 @@ func (l *relay) relayMessageHandler(client mqtt.Client, msg mqtt.Message) {
 	device_id, _ := strconv.ParseUint(s_fields[0], 10, 64)
 	relay_id, _ := strconv.ParseUint(s_fields[1], 10, 64)
 
-	// receive message and DO
-	switch string(msg.Payload()) {
-	case "0":
-		// logic when OFF
+	switch s_fields[2] {
+	case "on":
+		// receive message and DO
+		switch string(msg.Payload()) {
+		case "0":
+			// logic when OFF
 
-		Relay_OFF(uint8(device_id), uint8(relay_id))
-		l.status = StatusRelay(uint8(device_id), uint8(relay_id))
-		log.Println("l.status", l.status)
+			Relay_OFF(uint8(device_id), uint8(relay_id))
+			l.status = StatusRelay(uint8(device_id), uint8(relay_id))
+			log.Println("l.status", l.status)
 
-		l.PublishStatus(0, s_fields[0], s_fields[1])
-	case "1":
-		// logic when ON
-		Relay_ON(uint8(device_id), uint8(relay_id))
-		l.status = StatusRelay(uint8(device_id), uint8(relay_id))
-		log.Println("l.status", l.status)
-		l.PublishStatus(0, s_fields[0], s_fields[1])
-	case "status":
+			l.PublishStatus(0, s_fields[0], s_fields[1])
+		case "1":
+			// logic when ON
+			Relay_ON(uint8(device_id), uint8(relay_id))
+			l.status = StatusRelay(uint8(device_id), uint8(relay_id))
+			log.Println("l.status", l.status)
+			l.PublishStatus(0, s_fields[0], s_fields[1])
+		}
+
+	case "state":
 		// publish status
 		l.status = StatusRelay(uint8(device_id), uint8(relay_id))
 		log.Println("l.status", l.status)
 		l.PublishStatus(0, s_fields[0], s_fields[1])
 	}
+
 }
 
 // getBrightness
