@@ -123,15 +123,20 @@ func (l *relay) relayMessageHandler(client mqtt.Client, msg mqtt.Message) {
 		case "0":
 			// logic when OFF
 
-			Relay_OFF(uint8(device_id), uint8(relay_id))
-			l.status = StatusRelay(uint8(device_id), uint8(relay_id))
+			l.status = RelayOnOff(uint8(device_id), uint8(relay_id), 0)
 			log.Println("l.status", l.status)
 
 			l.PublishStatus(0, s_fields[0], s_fields[1])
 		case "1":
 			// logic when ON
-			Relay_ON(uint8(device_id), uint8(relay_id))
-			l.status = StatusRelay(uint8(device_id), uint8(relay_id))
+
+			l.status = RelayOnOff(uint8(device_id), uint8(relay_id), 1)
+			log.Println("l.status", l.status)
+			l.PublishStatus(0, s_fields[0], s_fields[1])
+		case "3":
+			// logic when ON
+
+			l.status = RelayOnOff(uint8(device_id), uint8(relay_id), 3)
 			log.Println("l.status", l.status)
 			l.PublishStatus(0, s_fields[0], s_fields[1])
 		}
