@@ -153,6 +153,15 @@ func RelayOnOff(addr uint8, relay uint8, on uint8) string {
 	Command1[0] = addr
 	Command1[4] = relay
 	Command1[5] = on // 0-off 1-on 3-blink ...
+	_, out := status_serial(write_serial(crc8dallas(Command1)), 2, relay)
+	return out
+}
+
+func RelayWhile(addr uint8, relay uint8, on uint8) string {
+	Command1 := []byte{127, 0x06, 0x00, 0x15, 0x01, 0x01, 0xFF}
+	Command1[0] = addr
+	Command1[4] = relay
+	Command1[5] = on // 0-off 1-on 3-blink ...
 	_, out := status_serial(write_serial(crc8dallas(Command1)), 3, relay)
 	return out
 }
