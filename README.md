@@ -38,7 +38,7 @@ reply from bad requests
 /devices/c2000-sp1/0/1/status/relay none
 ``` -->
 
-Request ADC input Voltage  (U1 = 1, U2 = 2)
+Request ADC input Voltage  (U1 = 1, U2 = 2,  maximum from two inputs=0)
 
 for example request DeviceID=5,  Voltage Input=1:
 ```
@@ -48,6 +48,17 @@ Reply:
 ```
 /devices/c2000-sp1/5/1/status/adc 24.4
 ```
+
+for example request DeviceID=5,  the maximum voltage at both inputs:
+```
+root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/5/0/adc" -m ""
+```
+Reply:
+```
+/devices/c2000-sp1/5/0/status/adc 24.4
+```
+
+
 
 Subscribe to all devices:
 
