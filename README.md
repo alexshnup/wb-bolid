@@ -1,5 +1,8 @@
 # wb-bolid
 
+Relay control
+------------
+
 Device 127 Relay-1 ON:
 ```
 root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/1/on" -m "1"
@@ -18,8 +21,10 @@ Bad reply if connection problem
 /devices/c2000-sp1/127/2/status/relay none
 ```
 
+Activate the relay for a time specified in the settings
+------------
 
-Activate the relay #2 for a time specified in the settings Device 127:
+Example Device 127 Relay-2:
 ```
 root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/2/on" -m "3"
 ```
@@ -47,7 +52,10 @@ reply from bad requests
 /devices/c2000-sp1/0/1/status/relay none
 ``` -->
 
-Request ADC input Voltage  (U1 = 1, U2 = 2,  maximum from two inputs=0)
+Request ADC input Voltage
+-------------------------
+
+(U1 = 1, U2 = 2,  maximum from two inputs=0)
 
 for example request DeviceID=5,  Voltage Input=1:
 ```
@@ -68,6 +76,9 @@ Reply:
 ```
 
 
+
+Subscribe
+---------
 
 Subscribe to all devices:
 
