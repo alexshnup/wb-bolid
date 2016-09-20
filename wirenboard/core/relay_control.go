@@ -80,25 +80,30 @@ func status_serial(result []byte, typeStatus uint8, channel uint8) (uint8, strin
 	fmt.Printf("%x\n", result)
 	switch typeStatus {
 	case 0:
-		if rune(result[4]) == 0x18 { //&& (rune(result[5]) == 0xEC) {
+		if rune(result[4]) == 0x18 {
 			log.Printf("Enter - relay %d - OK", channel)
 			return channel, "enter_ok"
 		}
 	case 1:
-		if rune(result[2]) == 0x42 { //&& (rune(result[5]) == 0xFD) {
+		if rune(result[2]) == 0x42 {
 			log.Printf("Command OK - relay %d", channel)
 			return channel, "relay_ok"
 		}
 	case 2:
-		if rune(result[4]) == 0x01 && (rune(result[3]) == rune(channel)) { //&& (rune(result[5]) == 0xB6) {
+		if rune(result[4]) == 0x01 && (rune(result[3]) == rune(channel)) {
 			log.Printf("Port %d - ON", channel)
 			return channel, "on"
-		} else if rune(result[4]) == 0x00 && (rune(result[3]) == rune(channel)) { //&& (rune(result[5]) == 0x54) {
+		} else if rune(result[4]) == 0x00 && (rune(result[3]) == rune(channel)) {
 			log.Printf("Port %d - OFF", channel)
 			return channel, "off"
 		}
-
 	case 3:
+		if rune(result[4]) == 0x03 && (rune(result[3]) == rune(channel)) {
+			log.Printf("Activate the relay %d for a time", channel)
+			return channel, "while"
+		}
+
+	case 4:
 		return channel, fmt.Sprintf("%d", result[4])
 	}
 	return channel, "none"
@@ -148,7 +153,7 @@ func RelayOnOff(addr uint8, relay uint8, on uint8) string {
 	Command1[0] = addr
 	Command1[4] = relay
 	Command1[5] = on // 0-off 1-on 3-blink ...
-	_, out := status_serial(write_serial(crc8dallas(Command1)), 2, relay)
+	_, out := status_serial(write_serial(crc8dallas(Command1)), 3, relay)
 	return out
 }
 
@@ -156,7 +161,7 @@ func ADC(addr uint8, input uint8) string {
 	Command1 := []byte{127, 0x06, 0x00, 0x1B, 0x01, 0x01, 0xFF}
 	Command1[0] = addr
 	Command1[4] = input
-	_, out := status_serial(write_serial(crc8dallas(Command1)), 3, input)
+	_, out := status_serial(write_serial(crc8dallas(Command1)), 4, input)
 	voltageInPopugai, _ := strconv.ParseUint(out, 10, 8)
 	out = strconv.FormatFloat((float64(voltageInPopugai)*134)/1000, 'f', 1, 32)
 	return out

@@ -18,6 +18,15 @@ Bad reply if connection problem
 /devices/c2000-sp1/127/2/status/relay none
 ```
 
+
+Activate the relay #2 for a time specified in the settings Device 127:
+```
+root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/2/on" -m "3"
+```
+Success reply:
+```
+/devices/c2000-sp1/127/2/status/relay while
+```
 <!-- Request status device 127, Relay-3
 ```
 root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/3/state" -m ""
