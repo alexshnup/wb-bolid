@@ -163,6 +163,49 @@ func (l *relay) relayMessageHandler(client mqtt.Client, msg mqtt.Message) {
 		log.Println("l.status", l.status)
 		l.PublishStatus(0, s_fields[0], s_fields[1])
 
+	case "setrelaydefaultmode":
+		// receive message and DO
+		switch string(msg.Payload()) {
+		case "off":
+			// publish status
+			l.status = SetConfig(uint8(device_id), uint8(relay_id), 2)
+			log.Println("l.status", l.status)
+			l.PublishStatus(0, s_fields[0], s_fields[1])
+		case "on":
+			// publish status
+			l.status = SetConfig(uint8(device_id), uint8(relay_id), 1)
+			log.Println("l.status", l.status)
+			l.PublishStatus(0, s_fields[0], s_fields[1])
+		case "blink":
+			// publish status
+			l.status = SetConfig(uint8(device_id), uint8(relay_id), 9)
+			log.Println("l.status", l.status)
+			l.PublishStatus(0, s_fields[0], s_fields[1])
+		case "pcn":
+			// publish status
+			l.status = SetConfig(uint8(device_id), uint8(relay_id), 10)
+			log.Println("l.status", l.status)
+			l.PublishStatus(0, s_fields[0], s_fields[1])
+		}
+
+	case "setrelaytime":
+		// receive message and DO
+		v, _ := strconv.ParseUint(string(msg.Payload()), 10, 64)
+		if v >= 1 && v <= 60 {
+			l.status = SetConfig(uint8(device_id), uint8(relay_id)+4, uint8(v))
+			log.Println("l.status", l.status)
+			l.PublishStatus(0, s_fields[0], s_fields[1])
+		}
+
+	case "changeaddress":
+		// receive message and DO
+		var newaddr uint8 = uint8(relay_id)
+		if newaddr >= 1 && newaddr <= 127 {
+			l.status = ChangeAddress(uint8(device_id), newaddr)
+			log.Println("l.status", l.status)
+			l.PublishStatus(0, s_fields[0], s_fields[1])
+		}
+
 	case "adc":
 		// publish status
 		l.status = ADC(uint8(device_id), uint8(relay_id))

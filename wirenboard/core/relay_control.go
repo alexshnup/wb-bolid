@@ -105,6 +105,13 @@ func status_serial(result []byte, typeStatus uint8, channel uint8) (uint8, strin
 
 	case 4:
 		return channel, fmt.Sprintf("%d", result[4])
+
+	case 5:
+		return channel, fmt.Sprintf("%d", result[3])
+
+	case 6:
+		return channel, fmt.Sprintf("%d", result[3])
+
 	}
 	return channel, "none"
 }
@@ -173,6 +180,28 @@ func ADC(addr uint8, input uint8) string {
 	_, out := status_serial(write_serial(crc8dallas(Command1)), 4, input)
 	voltageInPopugai, _ := strconv.ParseUint(out, 10, 8)
 	out = strconv.FormatFloat((float64(voltageInPopugai)*134)/1000, 'f', 1, 32)
+	return out
+}
+
+func SetConfig(addr, k, v uint8) string {
+	//set mode
+	Command1 := []byte{127, 0x08, 0x00, 0x41, 0x01, 0x00, 0x00, 0x02, 0xFF}
+
+	Command1[0] = addr
+	Command1[4] = k
+	Command1[7] = v
+	_, out := status_serial(write_serial(crc8dallas(Command1)), 5, k)
+	return out
+}
+
+func ChangeAddress(oldaddr, newaddr uint8) string {
+	//set mode
+	Command1 := []byte{127, 0x06, 0x00, 0x0f, 0x01, 0x01, 0xFF}
+
+	Command1[0] = oldaddr
+	Command1[4] = newaddr
+	Command1[5] = newaddr
+	_, out := status_serial(write_serial(crc8dallas(Command1)), 6, newaddr)
 	return out
 }
 

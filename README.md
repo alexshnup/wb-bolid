@@ -77,6 +77,31 @@ Reply:
 ```
 
 
+Change DeviceID
+-------------------------
+(Address 1...127)
+
+For example change address from 127 to 2
+```
+root@wirenboard:~#  mosquitto_pub -t "/devices/c2000-sp1/127/2/changeaddress" -m ""
+```
+
+Set default relay mode
+-------------------------
+(on, off, blink, pcn)
+```
+root@wirenboard:~#  mosquitto_pub -t "/devices/c2000-sp1/7/1/setrelaydefaultmode" -m "on"
+root@wirenboard:~#  mosquitto_pub -t "/devices/c2000-sp1/7/1/setrelaydefaultmode" -m "off"
+```
+
+Set relay time
+-------------------------
+(time in seconds 1...60)
+```
+root@wirenboard:~#  mosquitto_pub -t "/devices/c2000-sp1/7/1/setrelaytime" -m "1"
+root@wirenboard:~#  mosquitto_pub -t "/devices/c2000-sp1/7/2/setrelaytime" -m "60"
+```
+
 
 Subscribe
 ---------
