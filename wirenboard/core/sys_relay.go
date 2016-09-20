@@ -89,7 +89,23 @@ func (l *relay) UnSubscribe() {
 // PublishStatus Relay status
 func (l *relay) PublishStatus(qos byte, deviceID, relayID string) {
 
-	topic := l.topic + "/" + deviceID + "/" + relayID + "/status"
+	topic := l.topic + "/" + deviceID + "/" + relayID + "/status/relay"
+
+	// publish result
+	if token := l.client.Publish(topic, qos, false, l.status); token.Wait() && token.Error() != nil {
+		log.Println(token.Error())
+	}
+
+	// debug
+	if l.debug {
+		log.Println("[PUB]", qos, topic, l.status)
+	}
+}
+
+// PublishStatus Relay status
+func (l *relay) PublishADC(qos byte, deviceID, adcID string) {
+
+	topic := l.topic + "/" + deviceID + "/" + adcID + "/status/adc"
 
 	// publish result
 	if token := l.client.Publish(topic, qos, false, l.status); token.Wait() && token.Error() != nil {
@@ -141,11 +157,17 @@ func (l *relay) relayMessageHandler(client mqtt.Client, msg mqtt.Message) {
 			l.PublishStatus(0, s_fields[0], s_fields[1])
 		}
 
-	case "state":
+	case "s":
 		// publish status
 		l.status = StatusRelay(uint8(device_id), uint8(relay_id))
 		log.Println("l.status", l.status)
 		l.PublishStatus(0, s_fields[0], s_fields[1])
+
+	case "adc":
+		// publish status
+		l.status = ADC(uint8(device_id), uint8(relay_id))
+		log.Println("l.status", l.status)
+		l.PublishADC(0, s_fields[0], s_fields[1])
 	}
 
 }

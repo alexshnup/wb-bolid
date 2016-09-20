@@ -3,6 +3,7 @@ package syscore
 import (
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	tarmserial "github.com/alexshnup/serial"
@@ -75,30 +76,32 @@ func write_serial(send []byte) []byte {
 	return []byte(buf)
 }
 
-func status_serial(result []byte, typeStatus uint8, relay uint8) (uint8, string) {
+func status_serial(result []byte, typeStatus uint8, channel uint8) (uint8, string) {
 	fmt.Printf("%x\n", result)
 	switch typeStatus {
 	case 0:
 		if rune(result[4]) == 0x18 { //&& (rune(result[5]) == 0xEC) {
-			log.Printf("Enter - relay %d - OK", relay)
-			return relay, "enter_ok"
+			log.Printf("Enter - relay %d - OK", channel)
+			return channel, "enter_ok"
 		}
 	case 1:
 		if rune(result[2]) == 0x42 { //&& (rune(result[5]) == 0xFD) {
-			log.Printf("Command OK - relay %d", relay)
-			return relay, "relay_ok"
+			log.Printf("Command OK - relay %d", channel)
+			return channel, "relay_ok"
 		}
 	case 2:
-		if rune(result[4]) == 0x01 { //&& (rune(result[5]) == 0xB6) {
-			log.Printf("Port %d - ON", relay)
-			return relay, "on"
-		} else if rune(result[4]) == 0x00 { //&& (rune(result[5]) == 0x54) {
-			log.Printf("Port %d - OFF", relay)
-			return relay, "off"
+		if rune(result[4]) == 0x01 && (rune(result[3]) == rune(channel)) { //&& (rune(result[5]) == 0xB6) {
+			log.Printf("Port %d - ON", channel)
+			return channel, "on"
+		} else if rune(result[4]) == 0x00 && (rune(result[3]) == rune(channel)) { //&& (rune(result[5]) == 0x54) {
+			log.Printf("Port %d - OFF", channel)
+			return channel, "off"
 		}
 
+	case 3:
+		return channel, fmt.Sprintf("%d", result[4])
 	}
-	return relay, "none"
+	return channel, "none"
 }
 
 func ProgramDefaultStateRelay_ON(addr uint8, relay uint8) string {
@@ -146,6 +149,16 @@ func RelayOnOff(addr uint8, relay uint8, on uint8) string {
 	Command1[4] = relay
 	Command1[5] = on // 0-off 1-on 3-blink ...
 	_, out := status_serial(write_serial(crc8dallas(Command1)), 2, relay)
+	return out
+}
+
+func ADC(addr uint8, input uint8) string {
+	Command1 := []byte{127, 0x06, 0x00, 0x1B, 0x01, 0x01, 0xFF}
+	Command1[0] = addr
+	Command1[4] = input
+	_, out := status_serial(write_serial(crc8dallas(Command1)), 3, input)
+	voltageInPopugai, _ := strconv.ParseUint(out, 10, 8)
+	out = strconv.FormatFloat((float64(voltageInPopugai)*134)/1000, 'f', 1, 32)
 	return out
 }
 
