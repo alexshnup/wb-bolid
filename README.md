@@ -14,7 +14,8 @@ root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/2/on" -m "0"
 ```
 Success reply:
 ```
-/devices/c2000-sp1/127/2/status/relay on
+/devices/c2000-sp1/127/1/status/relay on
+/devices/c2000-sp1/127/2/status/relay off
 ```
 Bad reply if connection problem
 ```
