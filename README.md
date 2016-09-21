@@ -33,6 +33,13 @@ Success reply:
 ```
 /devices/c2000-sp1/127/2/status/relay while
 ```
+
+Set All Relays to default state
+-------------------------------
+example on device address 1
+```
+root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/1/0/on" -m "0"
+```
 <!-- Request status device 127, Relay-3
 ```
 root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/3/state" -m ""
@@ -105,7 +112,6 @@ root@wirenboard:~#  mosquitto_pub -t "/devices/c2000-sp1/7/2/setrelaytime" -m "6
 
 Subscribe
 ---------
-
 Subscribe to all devices:
 
 ```
