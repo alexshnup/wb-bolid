@@ -113,10 +113,10 @@ func status_serial(result []byte, typeStatus uint8, channel uint8) (uint8, strin
 		return channel, fmt.Sprintf("%d", result[3])
 
 	case 7:
-		if rune(result[5]) == 0x98 {
+		if rune(result[5]) == 0x95 {
 			log.Printf("Status %d - Open", channel)
 			return channel, "open"
-		} else if rune(result[5]) == 0x95 {
+		} else if rune(result[5]) == 0x98 {
 			log.Printf("Status %d - Close", channel)
 			return channel, "close"
 		}
