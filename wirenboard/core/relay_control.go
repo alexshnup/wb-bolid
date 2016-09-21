@@ -112,6 +112,15 @@ func status_serial(result []byte, typeStatus uint8, channel uint8) (uint8, strin
 	case 6:
 		return channel, fmt.Sprintf("%d", result[3])
 
+	case 7:
+		if rune(result[5]) == 0x98 {
+			log.Printf("Status %d - Open", channel)
+			return channel, "open"
+		} else if rune(result[5]) == 0x95 {
+			log.Printf("Status %d - Close", channel)
+			return channel, "close"
+		}
+
 	}
 	return channel, "none"
 }
@@ -147,11 +156,11 @@ func ProgramDefaultStateRelay_OFF(addr uint8, relay uint8) string {
 // 	return out
 // }
 
-func StatusRelay(addr uint8, relay uint8) string {
+func Status(addr uint8, relay uint8) string {
 	Command1 := []byte{127, 0x06, 0x00, 0x19, 0x01, 0x00, 0xFF}
 	Command1[0] = addr
 	Command1[4] = relay
-	_, out := status_serial(write_serial(crc8dallas(Command1)), 2, relay)
+	_, out := status_serial(write_serial(crc8dallas(Command1)), 7, relay)
 	return out
 }
 

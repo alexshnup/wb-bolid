@@ -103,6 +103,22 @@ func (l *relay) PublishStatus(qos byte, deviceID, relayID string) {
 }
 
 // PublishStatus Relay status
+func (l *relay) PublishStatusSensor(qos byte, deviceID, relayID string) {
+
+	topic := l.topic + "/" + deviceID + "/" + relayID + "/status/sensor"
+
+	// publish result
+	if token := l.client.Publish(topic, qos, false, l.status); token.Wait() && token.Error() != nil {
+		log.Println(token.Error())
+	}
+
+	// debug
+	if l.debug {
+		log.Println("[PUB]", qos, topic, l.status)
+	}
+}
+
+// PublishStatus Relay status
 func (l *relay) PublishADC(qos byte, deviceID, adcID string) {
 
 	topic := l.topic + "/" + deviceID + "/" + adcID + "/status/adc"
@@ -157,11 +173,11 @@ func (l *relay) relayMessageHandler(client mqtt.Client, msg mqtt.Message) {
 			l.PublishStatus(0, s_fields[0], s_fields[1])
 		}
 
-	case "s":
+	case "sensor":
 		// publish status
-		l.status = StatusRelay(uint8(device_id), uint8(relay_id))
+		l.status = Status(uint8(device_id), uint8(relay_id))
 		log.Println("l.status", l.status)
-		l.PublishStatus(0, s_fields[0], s_fields[1])
+		l.PublishStatusSensor(0, s_fields[0], s_fields[1])
 
 	case "setrelaydefaultmode":
 		// receive message and DO

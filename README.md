@@ -40,6 +40,20 @@ example on device address 1
 ```
 root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/1/0/on" -m "0"
 ```
+
+
+Request status sensor open/close
+--------------------------------
+(sensor case open/close)
+
+```
+root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/1/0/sensor" -m ""
+```
+
+reply:
+```
+/devices/c2000-sp1/1/0/status/sensor open
+```
 <!-- Request status device 127, Relay-3
 ```
 root@wirenboard:~# mosquitto_pub -t "/devices/c2000-sp1/127/3/state" -m ""
