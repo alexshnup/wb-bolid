@@ -4,6 +4,7 @@ DEB_TARGET_ARCH ?= armel
 
 ifeq ($(DEB_TARGET_ARCH),armel)
 GO_ENV := GOARCH=arm GOARM=5 CC_FOR_TARGET=arm-linux-gnueabi-gcc CC=$$CC_FOR_TARGET CGO_ENABLED=1
+#GO_ENV := GOOS=linux GOARCH=arm GOARM=5 CGO_ENABLED=0
 endif
 ifeq ($(DEB_TARGET_ARCH),amd64)
 GO_ENV := GOARCH=amd64 CC=x86_64-linux-gnu-gcc
@@ -20,7 +21,7 @@ clean:
 amd64:
 	$(MAKE) DEB_TARGET_ARCH=amd64
 
-wb-bolid: main.go *.go
+wb-bolid: main.go *.go conf/*.go
 	$(GO_ENV) glide install
 	$(GO_ENV) go build
 

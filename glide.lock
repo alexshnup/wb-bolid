@@ -1,5 +1,5 @@
-hash: 7dc4b8d9828558d785d2f8bd21ad0ebade761ccd1ffc6d78dc7f11e2ce218b3b
-updated: 2016-09-13T07:54:59.158366507Z
+hash: 6192a68f42cdb67ab4a7bf5072ab2c972c68af9ae4747ebae3ee8af00f01d02e
+updated: 2018-11-18T20:31:20.0549471Z
 imports:
 - name: github.com/alexshnup/go-config-manager
   version: 510732f0c5058b2aeaa1357c1d9f107c67f3a591
@@ -19,4 +19,4 @@ imports:
   version: 749a502dd1eaf3e5bfd4f8956748c502357c0bbe
   subpackages:
   - websocket
-devImports: []
+testImports: []

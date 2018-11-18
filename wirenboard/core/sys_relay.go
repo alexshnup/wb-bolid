@@ -92,7 +92,7 @@ func (l *relay) PublishStatus(qos byte, deviceID, relayID string) {
 	topic := l.topic + "/" + deviceID + "/" + relayID + "/status/relay"
 
 	// publish result
-	if token := l.client.Publish(topic, qos, false, l.status); token.Wait() && token.Error() != nil {
+	if token := l.client.Publish(topic, qos, true, l.status); token.Wait() && token.Error() != nil {
 		log.Println(token.Error())
 	}
 

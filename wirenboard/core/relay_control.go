@@ -92,15 +92,15 @@ func status_serial(result []byte, typeStatus uint8, channel uint8) (uint8, strin
 	case 2:
 		if rune(result[4]) == 0x01 && (rune(result[3]) == rune(channel)) {
 			log.Printf("Port %d - ON", channel)
-			return channel, "on"
+			return channel, "1"
 		} else if rune(result[4]) == 0x00 && (rune(result[3]) == rune(channel)) {
 			log.Printf("Port %d - OFF", channel)
-			return channel, "off"
+			return channel, "0"
 		}
 	case 3:
 		if rune(result[4]) == 0x03 && (rune(result[3]) == rune(channel)) {
 			log.Printf("Activate the relay %d for a time", channel)
-			return channel, "while"
+			return channel, "3"
 		}
 
 	case 4:
